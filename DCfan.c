@@ -3,6 +3,7 @@
 #include "pico/stdlib.h"
 #include "hardware/pwm.h"
 #include "DCfan.h"
+
 void setup() {
     // Initialize the fan pins
     initDCFan();
@@ -13,16 +14,13 @@ void setup() {
 
 void initDCFan() {
     setupPWM(FAN_PWM_PIN);
+
     // Initialize pins as outputs
     gpio_init(FAN_PIN_A);
     gpio_set_dir(FAN_PIN_A, GPIO_OUT);
 
     gpio_init(FAN_PIN_B);
     gpio_set_dir(FAN_PIN_B, GPIO_OUT);
-
-    // gpio_set_function(FAN_PWM_PIN, GPIO_FUNC_PWM);
-
-    //gpio_set_dir(FAN_PWM_PIN, GPIO_OUT);
 
     // Stop fan initially
     gpio_put(FAN_PIN_A, 1);
