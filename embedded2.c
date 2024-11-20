@@ -11,9 +11,8 @@
 #include "led.h"
 #include "flame.h"
 
-
 // int main() {
-//     stdio_init_all();  
+//     stdio_init_all();
 //     buzzer_init();
 //     initLEDs();
 //     initializeGasDetector();
@@ -33,8 +32,8 @@
 //         turnOffTempLed();
 //         turnOffGasLed();
 //         sleep_ms(300);
-        
-//     }  
+
+//     }
 
 //     while (1) {
 //         // Read the gas level
@@ -82,7 +81,6 @@
 //     }
 // }
 
-
 // // int main() {
 // // stdio_init_all();
 // // while (1) {
@@ -91,14 +89,17 @@
 // // }
 // // return 0;
 // // }
-int main(){
-    stdio_init_all();  
+
+int main()
+{
+    stdio_init_all();
     buzzer_init();
     initLEDs();
-    initializeGasDetector();
+    adc_init();
     initializeTemperatureSensor();
     initDCFan();
     initializeFlameDetector();
+    initializeGasDetector();
 
     uint slice_num = pwm_gpio_to_slice_num(21);
     gpio_init(17);
@@ -108,7 +109,8 @@ int main(){
     initDCFan();
 
     // Blink LED to indicate system is working
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++)
+    {
         turnOnGasLed();
         turnOnTempLed();
         turnOnFlameLed();
@@ -118,10 +120,11 @@ int main(){
         turnOffFlameLed();
         turnOffTempLed();
         turnOffGasLed();
-        sleep_ms(300);    
-   }
+        sleep_ms(300);
+    }
 
-    while(true) {
+    while (true)
+    {
         // Read the gas level
         uint16_t gasLevel = readGasLevel();
 
@@ -129,26 +132,26 @@ int main(){
         checkGasLevel(gasLevel);
 
         // Read the temperature from the temperature sensor
-        // float temperature = readTemperature();
+        float temperature = readTemperature();
 
         // Check the temperature and trigger actions if necessary
-        // checkTemperature(temperature);
+        checkTemperature(temperature);
 
         // Read the flame level
-        // uint16_t flameLevel = readFlameLevel();
+        uint16_t flameLevel = readFlameLevel();
 
         // Check the flame level and trigger alarms if necessary
-        // checkFlameLevel(flameLevel);
+        checkFlameLevel(flameLevel);
 
-        // Increasing speed of the fan  
+        // Increasing speed of the fan
         // for(int i = 0 ; i<255 ; i++){
         // setFanSpeed(i , true);
         // delay_ms(100);
         // if( i ==255){
-        // i = 0 ; 
+        // i = 0 ;
         // }
         // }
-        delay_ms(5000);
+        delay_ms(2000);
     }
-return 0 ; 
+    return 0;
 }
