@@ -10,6 +10,11 @@
 #include "buzzer.h"
 #include "led.h"
 #include "flame.h"
+#include "hardware/uart.h"
+#define UART_ID uart0
+#define BAUD_RATE 9600
+#define UART_TX_PIN 0
+#define UART_RX_PIN 1
 
 // int main() {
 //     stdio_init_all();
@@ -96,10 +101,7 @@ int main()
     buzzer_init();
     initLEDs();
     adc_init();
-    initializeTemperatureSensor();
     initDCFan();
-    initializeFlameDetector();
-    initializeGasDetector();
 
     uint slice_num = pwm_gpio_to_slice_num(21);
     gpio_init(17);
@@ -107,6 +109,17 @@ int main()
     gpio_init(18);
     gpio_set_dir(18, GPIO_OUT);
     initDCFan();
+
+    uart_init(UART_ID, BAUD_RATE);
+    gpio_set_function(UART_TX_PIN, GPIO_FUNC_UART);
+    gpio_set_function(UART_RX_PIN, GPIO_FUNC_UART);
+    while (true)
+    {
+        {
+            uart_puts(UART_ID, "hello\n"); // Send "hello" message
+            sleep_ms(3000);
+        }
+    }
 
     // Blink LED to indicate system is working
     for (int i = 0; i < 3; i++)
@@ -125,18 +138,21 @@ int main()
 
     while (true)
     {
+        initializeGasDetector();
         // Read the gas level
         uint16_t gasLevel = readGasLevel();
 
         // Check the gas level and trigger alarms if necessary
         checkGasLevel(gasLevel);
 
+        initializeTemperatureSensor();
         // Read the temperature from the temperature sensor
         float temperature = readTemperature();
 
         // Check the temperature and trigger actions if necessary
         checkTemperature(temperature);
 
+        initializeFlameDetector();
         // Read the flame level
         uint16_t flameLevel = readFlameLevel();
 

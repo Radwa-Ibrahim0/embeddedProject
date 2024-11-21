@@ -4,11 +4,10 @@
 #define TEMPERATURE_SENSOR_H
 
 // Pin definition for the temperature sensor
-#define TEMP_SENSOR_PIN 27  // GPIO pin for the temperature sensor (ADC channel 1)
-
+#define TEMP_SENSOR_PIN 27 // GPIO pin for the temperature sensor (ADC channel 1)
 
 // Temperature threshold in Celsius (you can change this based on your application)
-#define TEMP_THRESHOLD 1000  // Example: 30°C
+#define TEMP_THRESHOLD 1500 // Example: 30°C
 
 // Function prototypes
 void initializeTemperatureSensor();

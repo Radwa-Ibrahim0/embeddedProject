@@ -11,7 +11,7 @@
 void initializeFlameDetector()
 {
     adc_gpio_init(FLAME_SENSOR_PIN); // Initialize the GPIO pin for ADC
-    adc_select_input(3);             // Select input channel 1
+    adc_select_input(2);             // Select input channel 1
     // printf("Flame detector initialized.\n");
 }
 

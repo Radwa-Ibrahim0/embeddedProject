@@ -32,6 +32,7 @@ void checkGasLevel(uint16_t gasLevel)
         // Turn on LED and buzzer
         turnOnGasLed();
         // buzzer_on();
+        sendGasAlert(gasLevel);
         printf("Gas detected! Warning!\n");
     }
     else
@@ -40,4 +41,8 @@ void checkGasLevel(uint16_t gasLevel)
         turnOffGasLed();
         // buzzer_off();
     }
+}
+
+void sendGasAlert(uint16_t gasLevel)
+{
 }

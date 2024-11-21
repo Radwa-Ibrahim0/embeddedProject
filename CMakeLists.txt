@@ -21,7 +21,7 @@ set(picotoolVersion 2.0.0)
 set(picoVscode ${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
 if (EXISTS ${picoVscode})
     include(${picoVscode})
-endif()
+endif
 # ====================================================================================
 set(PICO_BOARD arduino_nano_rp2040_connect CACHE STRING "Board type")
 
@@ -34,16 +34,15 @@ project(embedded2 C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-
-# [cmake] mbedtls available at C:/VSARM/sdk/pico/pico-sdk/lib/mbedtls
 add_executable(embedded2 
-embedded2.c
-led.c
-gas.c
-temp.c
-buzzer.c
-DCfan.c
-flame.c)
+  embedded2.c
+  led.c
+  gas.c
+  temp.c
+  buzzer.c
+  DCfan.c
+  flame.c
+)
 
 pico_set_program_name(embedded2 "embedded2")
 pico_set_program_version(embedded2 "0.1")
@@ -57,21 +56,33 @@ pico_enable_stdio_usb(embedded2 1)
 
 # Add the standard library to the build
 target_link_libraries(embedded2
-        pico_stdlib)
+    pico_stdlib
+)
 
 # Add the standard include files to the build
 target_include_directories(embedded2 PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}
+  C:/Users/Samalouty/Downloads/WiFi-1.2.7/WiFi-1.2.7/src
+  C:/Users/Samalouty/Downloads/arduino-esp32-3.0.7/arduino-esp32-3.0.7/libraries/HTTPClient/src
+  C:/Users/Samalouty/Downloads/ArduinoJson-7.2.1/ArduinoJson-7.2.1
+  ${PICO_SDK_PATH}/src/rp2_common/pico_cyw43_arch/include
 )
 
 # Add any user requested libraries
-target_link_libraries(embedded2 
-        hardware_spi
-        hardware_i2c
-        hardware_pio
-        hardware_adc   # Add this for adc.h
-        hardware_pwm   # Add this for pwm.h
-        )
+target_link_libraries(embedded2
+    pico_stdlib
+    hardware_spi
+    hardware_i2c
+    hardware_pio
+    hardware_adc
+    hardware_pwm
+    pico_cyw43_arch_lwip_threadsafe_background
+    hardware_uart
+)
 
 pico_add_extra_outputs(embedded2)
 
+# Additional configurations for including CYW43 library
+set(PICO_BOARD pico_w)
+target_include_directories(embedded2 PRIVATE ${PICO_SDK_PATH}/src/rp2_common/pico_cyw43_arch/include)
+target_link_libraries(embedded2 pico_cyw43_arch)

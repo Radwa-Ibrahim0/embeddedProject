@@ -24,7 +24,7 @@ float readTemperature()
 // Check the temperature and perform action if it exceeds the threshold
 void checkTemperature(float temperature)
 {
-    if (temperature > TEMP_THRESHOLD)
+    if (temperature < TEMP_THRESHOLD)
     {
         printf("Warning: Temperature exceeded threshold! Current Temp: %.2f°C\n", temperature);
         turnOnTempLed();
