@@ -48,6 +48,7 @@ void setupPWM(uint gpio) { // tamam
 
     pwm_set_gpio_level(FAN_PWM_PIN, 0); // Set PWM to 0% duty cycle
     pwm_set_enabled(slice, true);
+
 }
 
 void fanLoop() {

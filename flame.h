@@ -2,10 +2,10 @@
 #define FLAME_H
 
 // Pin definitions
-#define FLAME_SENSOR_PIN 29
+#define FLAME_SENSOR_PIN 28
 
 // Flame threshold value
-#define FLAME_THRESHOLD 1500 // Adjust this value as necessary
+#define FLAME_THRESHOLD 3200 // Adjust this value as necessary
 
 // Function prototypes
 void initializeFlameDetector();
